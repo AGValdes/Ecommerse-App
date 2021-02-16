@@ -5,7 +5,7 @@ A Dashboard for the owner of an E-Commerse Application to view, create, edit, an
 Kjell Overholt, Ameilia Valdes
 
 ## Approach and Planning
-![Image of View Models and ERD](./seraphinassundries.jpeg)
+![Image of View Models and ERD](./SeraphinasSundries.jpg)
 
 This Application has 3 views: 
 - The Index view acts as the home page, where you can view all categories. Upon clicking a category, you are redirected to the Category Details View.
