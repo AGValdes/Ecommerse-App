@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Ecommerce_App.Models
 {
-	public class ProductCategory
+	public class CategoryProduct
 	{
 		public int ProductId { get; set; }
 		public int CategoryId { get; set; }
 
 
-		public ProductCategory(Category category, Product product)
+		public CategoryProduct(Category category, Product product)
 		{
 			ProductId = product.Id;
 			CategoryId = category.Id;

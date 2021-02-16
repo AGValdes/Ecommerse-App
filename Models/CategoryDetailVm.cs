@@ -12,6 +12,6 @@ namespace Ecommerce_App.Models
 
 		public string Description = category.Description;
 
-		public List<ProductCategory> Products = category.Products;
+		public List<CategoryProduct> Products = category.Products;
 	}
 }

@@ -1,15 +1,6 @@
-﻿@model Ecommerce_App.Models.CategoryDetailVm
+﻿Hello from category details!
 
-<h1>Here are the details for @Model.CatName</h1>
-<article>@Model.Description</article>
-<ul>
-@foreach (var product in Model.Products)
-{
-	<li>
-			<a asp-controller="Dashboard" asp-action="ProductDetails" asp-route-Id=@product.ProductId>@
-	</li>
-}
+<a asp-controller="Dashboard" asp-action="Index">Back Home to Categories!</a>
 
-</ul>
-
+<a asp-controller="Dashboard" asp-action="ProductDetails">Go to Product Details!</a>
 

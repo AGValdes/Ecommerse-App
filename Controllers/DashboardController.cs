@@ -28,15 +28,17 @@ namespace Ecommerce_App.Controllers
 			return View(categories);
 		} 
 
-		public IActionResult CategoryDetails(int Id)
+		public IActionResult CategoryDetails()
 		{
-			ProductCategory weaponsList = new ProductCategory(categories[0], sunBlade)
-			{
-				CategoryId = categories[0].Id,
-				ProductId = sunBlade.Id
-			};
+			
 			return View();
 		
+		}
+		public IActionResult ProductDetails()
+		{
+
+			return View();
+
 		}
 	}
 	
