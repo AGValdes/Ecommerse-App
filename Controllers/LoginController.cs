@@ -29,7 +29,7 @@ namespace Ecommerce_App.Controllers
 
 
         // Register Screen
-        public IActionResult Signup()
+        public IActionResult Register()
         {
             return View();
         }
@@ -57,20 +57,24 @@ namespace Ecommerce_App.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDTO>> Register(RegisterUser data)
         {
-            try
-            {
-                data.Roles = new List<string>() { "guest" };
+           if(ModelState.IsValid)
+           {
                 var user = await userService.Register(data, this.ModelState);
+           
                 return Redirect("/login");
-            }
-            catch(Exception e)
+
+			      }
+            else
             {
-                return Redirect("/login/error");
-            }
+                 ModelState.AddModelError(string.Empty, "Invalid Username or Password");
+                 return View(data);
+			      }
+       
         }
 
 
-        public IActionResult Welcome()
+
+    public IActionResult Welcome()
         {
             return View();
         }
