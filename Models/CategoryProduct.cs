@@ -10,11 +10,8 @@ namespace Ecommerce_App.Models
 		public int ProductId { get; set; }
 		public int CategoryId { get; set; }
 
-
-		public CategoryProduct(Category category, Product product)
-		{
-			ProductId = product.Id;
-			CategoryId = category.Id;
-		}
+		//Navigation Properties:
+		public Category category { get; set; }
+		public Product product { get; set; }
 	}
 }
