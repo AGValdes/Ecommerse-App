@@ -1,4 +1,5 @@
 ﻿using Ecommerce_App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,17 +24,22 @@ namespace Ecommerce_App.Controllers
 						new Category() { Name = "Wonderous Items", Description = "Miscellaneous Magical Item" }
 			};
 		Product sunBlade = new Product() { Id = 1, Name = "Sun Blade", Description = "This appears to be a long sword hilt, but it emenates a radiant energy", Category = categories[0], Price = 100.00m, ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/436/1000/1000/636284772783859015.jpeg" };
+		
+		[Authorize(Roles = "Admin")]
 		public IActionResult Index()
 		{
 			return View(categories);
 		} 
 
+		[Authorize(Roles = "Admin")]
 		public IActionResult CategoryDetails()
 		{
-			
+
 			return View();
 		
 		}
+
+		[Authorize(Roles = "Admin")]
 		public IActionResult ProductDetails()
 		{
 
