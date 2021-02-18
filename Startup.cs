@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ecommerce_App.Auth.Services.Interfaces;
 using Ecommerce_App.Auth.Services;
+using Ecommerce_App.Services.Interfaces;
+using Ecommerce_App.Services;
 
 namespace Ecommerce_App
 {
@@ -46,8 +48,9 @@ namespace Ecommerce_App
 				options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
 			});
 			services.AddTransient<IUserService, IdentityUserService>();
+			services.AddTransient<ICategory, CategoryRepository>();
+			services.AddTransient<IProduct, ProductRepository>();
 		}
-
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{

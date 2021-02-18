@@ -1,4 +1,5 @@
 ﻿using Ecommerce_App.Models;
+using Ecommerce_App.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,17 +11,25 @@ namespace Ecommerce_App.Controllers
 {
 	public class DashboardController : Controller
 	{
-
-		
-		[Authorize(Roles = "Admin")]
-		public IActionResult Index()
+		private readonly IProduct _product;
+		private readonly ICategory _category;
+		public DashboardController(IProduct product, ICategory category)
 		{
-			return View();
+			_product = product;
+			_category = category;
+		}
+
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<IEnumerable<Category>>> Index()
+		{
+			var categories = await _category.GetCategories();
+			return View(categories);
 		} 
 
 		[Authorize(Roles = "Admin")]
 		public IActionResult CategoryDetails()
 		{
+			
 
 			return View();
 		
