@@ -3,3 +3,10 @@
 <h1>Welcome to the Category Dashboard!</h1>
 <h2>Here, you can view all existing categories for the various magical items available in the store!</h2>
 <h3>Click on a category to view it's details!</h3>
+<ul>
+
+@foreach (model.Category category in Model)
+{
+<li><a asp-controller="Dashboard" asp-action="CategoryDetails">@category.Name</a></li>
+}
+</ul>
