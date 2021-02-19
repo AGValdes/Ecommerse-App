@@ -1,8 +1,12 @@
-﻿using Ecommerce_App.Models;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Ecommerce_App.Models;
 using Ecommerce_App.Models.DTO;
 using Ecommerce_App.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +18,12 @@ namespace Ecommerce_App.Controllers
 	{
 		private readonly IProduct _product;
 		private readonly ICategory _category;
-		public DashboardController(IProduct product, ICategory category)
+		private readonly IConfiguration _configuration;
+		public DashboardController(IProduct product, ICategory category, IConfiguration configuration)
 		{
 			_product = product;
 			_category = category;
+			_configuration = configuration;
 		}
 
 		//<------------------------PAGE DISPLAY------------------------>
@@ -44,6 +50,18 @@ namespace Ecommerce_App.Controllers
 			return View(product);
 
 		}
+
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<Document>> UploadImage()
+        {
+			return View();
+        }
+
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> PutProduct()
+        {
+			return Redirect("/dashboard/productdetails");
+        }
 
 
 		//<------------------------CUD OPERATIONS------------------------>
@@ -72,6 +90,31 @@ namespace Ecommerce_App.Controllers
 			await _category.AddProductToCategory(roomId, amenityId);
 			return NoContent();
 		}
+
+		[HttpPost]
+		public async Task<ActionResult<Document>> UploadImage(IFormFile file)
+        {
+			BlobContainerClient container = new BlobContainerClient(_configuration.GetConnectionString("StorageAccount"), "images");
+			await container.CreateIfNotExistsAsync();
+			BlobClient blob = container.GetBlobClient(file.FileName);
+			using var stream = file.OpenReadStream();
+			BlobUploadOptions options = new BlobUploadOptions()
+			{
+				HttpHeaders = new BlobHttpHeaders() { ContentType = file.ContentType }
+			};
+            if (!blob.Exists())
+            {
+				await blob.UploadAsync(stream, options);
+            }
+			Document document = new Document() 
+			{ 
+				Name = file.FileName, 
+				Type = file.ContentType, 
+				Size = file.Length, 
+				URL = blob.Uri.ToString() 
+			};
+			return View(document);
+        }
 
 
 		//UPDATE
