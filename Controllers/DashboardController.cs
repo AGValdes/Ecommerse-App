@@ -1,4 +1,6 @@
 ﻿using Ecommerce_App.Models;
+using Ecommerce_App.Models.DTO;
+using Ecommerce_App.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,44 +12,101 @@ namespace Ecommerce_App.Controllers
 {
 	public class DashboardController : Controller
 	{
+		private readonly IProduct _product;
+		private readonly ICategory _category;
+		public DashboardController(IProduct product, ICategory category)
+		{
+			_product = product;
+			_category = category;
+		}
 
-		public static List<Category> categories = new List<Category>()
-			{
-						new Category() {Id = 1, Name = "Weapons", Description = "Magical items used for combat" },
-						new Category() { Name = "Armor", Description = "Magical items used for armor" },
-						new Category() { Name = "Potions", Description = "Magical concoctions" },
-						new Category() { Name = "Rings", Description = "Magical Jewelry" },
-						new Category() { Name = "Rods", Description = "Rods imbued with magical properties" },
-						new Category() { Name = "Scrolls", Description = "Parchment scrolls with magical encryptions" },
-						new Category() { Name = "Staves", Description = "Staves imbued with magical properties" },
-						new Category() { Name = "Wands", Description = "Magical implements with pre-set spells" },
-						new Category() { Name = "Wonderous Items", Description = "Miscellaneous Magical Item" }
-			};
-		Product sunBlade = new Product() { Id = 1, Name = "Sun Blade", Description = "This appears to be a long sword hilt, but it emenates a radiant energy", Category = categories[0], Price = 100.00m, ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/436/1000/1000/636284772783859015.jpeg" };
-		
+		//<------------------------PAGE DISPLAY------------------------>
+
 		[Authorize(Roles = "Admin")]
-		public IActionResult Index()
+		public async Task<ActionResult<List<Category>>> Index()
 		{
 			return View(categories);
-		} 
-
-		[Authorize(Roles = "Admin")]
-		public IActionResult CategoryDetails()
-		{
-
-			return View();
-		
 		}
 
 		[Authorize(Roles = "Admin")]
-		public IActionResult ProductDetails()
+		public async Task<ActionResult<Category>> CategoryDetails(int id)
 		{
-
-			return View();
+			var catagory = await _category.GetCategory(id);
+			return View(catagory);
 
 		}
+
+		[Authorize(Roles = "Admin")]
+		public async Task<ActionResult<ProductDetailsDTO>> ProductDetails(int id)
+		{
+			var product = await _product.GetProduct(id);
+			return View(product);
+
+		}
+
+
+		//<------------------------CUD OPERATIONS------------------------>
+
+		//CREATE
+		[HttpPost]
+		public async Task<ActionResult<Product>> PostProduct(Product product)
+		{
+			await _product.CreateProduct(product);
+			return CreatedAtAction("Getproduct", new { id = product.Id }, product);
+
+		}
+
+		[HttpPost]
+		public async Task<ActionResult<Category>> PostCategory(Category category)
+		{
+			await _category.CreateCategory(category);
+			return CreatedAtAction("GetCategory", new { id = category.Id }, category);
+
+		}
+
+		[HttpPost]
+		[Route("{categoryId}/{productId}")]
+		public async Task<IActionResult> AddProductToCategory(int roomId, int amenityId)
+		{
+			await _category.AddProductToCategory(roomId, amenityId);
+			return NoContent();
+		}
+
+
+		//UPDATE
+		[HttpPut()]
+		public async Task<IActionResult> PutProduct(Product product)
+		{
+
+			var updatedproduct = await _product.UpdateProduct(product);
+			return Redirect("/Dashboard/Productdetails");
+		}
+
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutCategory(Category category)
+		{
+
+			var updatedCategory = await _category.UpdateCategory(category);
+			return Ok(updatedCategory);
+		}
+
+
+		//DELETE
+		[HttpDelete("{id}")]
+		public async Task<ActionResult<Product>> DeleteProduct(int id)
+		{
+			await _product.DeleteProduct(id);
+			return NoContent();
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<ActionResult<Category>> DeleteCategory(int id)
+		{
+			await _category.DeleteCategory(id);
+			return NoContent();
+		}
+
 	}
-	
 }
 
 

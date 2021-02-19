@@ -12,6 +12,6 @@ namespace Ecommerce_App.Models
 		public string Description { get; set; }
 		public string ImgUrl { get; set; }
 		public decimal Price { get; set; }
-		public Category Category { get; set; }
+		public CategoryProduct CategoryProduct { get; set; }
 	}
 }

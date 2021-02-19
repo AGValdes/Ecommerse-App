@@ -1,3 +1,24 @@
-﻿Hello from product details!
+﻿@model Ecommerce_App.Models.DTO.ProductDetailsDTO
+
+Hello from product details!
 <a asp-controller="Dashboard" asp-action="Index">Back Home to Categories!</a>
 
+<section>
+    <h2>@Model.ProductName</h2>
+    <img alt= @Model.ProductName src= @Model.ImgUrl>
+    <p>@Model.ProductDescription</p>
+    <p>@Model.ProductPrice</p>
+</section>
+
+@if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+{
+    <section>
+        <form asp-controller="Dashboard" asp-action="PutProduct">
+            <input name="ProductName" placeholder="@Model.ProductName" type="text"/>
+            <input name="ImgUrl" placeholder="@Model.ImgUrl" type="text"/>
+            <input name="ProductDescription" placeholder="@Model.ProductDescription" type="text"/>
+            <input name="ProductPrice" placeholder="@Model.ProductPrice" type="number"/>
+            <button>Update @Model.ProductName</button>
+        </form>
+    </section>
+}
