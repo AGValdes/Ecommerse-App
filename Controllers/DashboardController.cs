@@ -1,12 +1,8 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Ecommerce_App.Models;
-using Ecommerce_App.Models.DTO;
-using Ecommerce_App.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,14 +42,7 @@ namespace Ecommerce_App.Controllers
 		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult<ProductDetailsDTO>> ProductDetails(int id)
 		{
-			var product = await _product.GetProduct(id);
-			return View(product);
 
-		}
-
-		[Authorize(Roles = "Admin")]
-		public async Task<ActionResult<Document>> UploadImage()
-        {
 			return View();
         }
 
