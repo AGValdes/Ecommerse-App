@@ -25,6 +25,7 @@ namespace Ecommerce_App.Controllers
 		[Authorize(Roles = "Admin")]
 		public async Task<ActionResult<List<Category>>> Index()
 		{
+			var categories = await _category.GetCategories();
 			return View(categories);
 		}
 
