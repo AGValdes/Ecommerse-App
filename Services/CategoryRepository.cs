@@ -1,5 +1,6 @@
 ﻿using Ecommerce_App.Data;
 using Ecommerce_App.Models;
+using Ecommerce_App.Models.DTO;
 using Ecommerce_App.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,10 +31,26 @@ namespace Ecommerce_App.Services
 			return categories;
 		}
 
-		public async Task<Category> GetCategory(int Id)
+		public async Task<CategoryDetailsDTO> GetCategory(int Id)
 		{
-			var category = await _context.categories.Include(category => category.Products).FirstOrDefaultAsync(category => category.Id == Id);
-			return category;
+
+			var category = await _context.categories.Include(category => category.Products).ThenInclude(products => products.product).ToListAsync();
+			return category
+				.Select(Category => new CategoryDetailsDTO
+				{
+					Id = Category.Id,
+					Name = Category.Name,
+					Description = Category.Description,
+					Products = Category.Products
+					.Select(p => new ProductDTO()
+					{
+						Id = p.product.Id,
+						Name = p.product.Name,
+						Description = p.product.Description,
+						ImgUrl = p.product.ImgUrl,
+						Price = p.product.Price
+					}).ToList()
+				}).FirstOrDefault(c => c.Id == Id);
 		}
 
 		public async Task<Category> UpdateCategory(Category category)

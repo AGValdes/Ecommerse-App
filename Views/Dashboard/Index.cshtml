@@ -1,12 +1,19 @@
-﻿@model IEnumerable<Ecommerce_App.Models.Category>
+﻿@model List<Ecommerce_App.Models.Category>
 
 <h1>Welcome to the Category Dashboard!</h1>
 <h2>Here, you can view all existing categories for the various magical items available in the store!</h2>
 <h3>Click on a category to view it's details!</h3>
 <ul>
 
-@foreach (model.Category category in Model)
+@foreach (var category in Model)
 {
-<li><a asp-controller="Dashboard" asp-action="CategoryDetails">@category.Name</a></li>
+<li>
+    <form asp-controller="Dashboard" asp-action="CategoryDetails">
+    <feild>
+        <input name="ID" value= @category.Id type="hidden"/>
+    </feild>
+    <button>@category.Name</button>
+    </form>
+</li>
 }
 </ul>

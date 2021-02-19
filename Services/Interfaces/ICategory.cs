@@ -1,4 +1,5 @@
 ﻿using Ecommerce_App.Models;
+using Ecommerce_App.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Ecommerce_App.Services.Interfaces
 	{
 
 		Task<Category> CreateCategory(Category category);
-		Task<Category> GetCategory(int Id);
+		Task<CategoryDetailsDTO> GetCategory(int Id);
 		Task<List<Category>> GetCategories();
 		Task<Category> UpdateCategory(Category category);
 		Task DeleteCategory(int Id);

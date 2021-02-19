@@ -1,0 +1,23 @@
+﻿@model Ecommerce_App.Models.Document
+
+<form asp-controller="Dashboard" asp-action="UploadImage">
+    <input name="Name" />
+    <input name="File" type="file" />
+    <button>Upload</button>
+</form>
+
+@if(Model != null)
+{
+    <h2>Document Details:</h2>
+    <ul>
+        <li>@Model.Name</li>
+        <li>@Model.Size</li>
+        <il>@Model.Type</il>
+        <li>@Model.URL</li>
+    </ul>
+    @if(Model.URL != null)
+    {
+        <img alt="Testing Image" src="@Model.URL" />
+    }
+}
+

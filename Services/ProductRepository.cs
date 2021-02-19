@@ -1,5 +1,6 @@
 ﻿using Ecommerce_App.Data;
 using Ecommerce_App.Models;
+using Ecommerce_App.Models.DTO;
 using Ecommerce_App.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +12,8 @@ namespace Ecommerce_App.Services
 {
 	public class ProductRepository: IProduct
 	{
-    public EcommerceDBContext _context;
+    private EcommerceDBContext _context;
+	
     public ProductRepository(EcommerceDBContext context)
     {
       _context = context;
@@ -23,10 +25,19 @@ namespace Ecommerce_App.Services
 			await _context.SaveChangesAsync();
 			return product;
 		}
-		public async Task<Product> GetProduct(int Id)
+		public async Task<ProductDetailsDTO> GetProduct(int Id)
 		{
-			Product product = await _context.products.FirstOrDefaultAsync();
-			return product;
+			return await _context.products
+				.Select(p => new ProductDetailsDTO
+				{
+					ProductID = p.Id,
+					ProductName = p.Name,
+					ProductDescription = p.Description,
+					ImgUrl = p.ImgUrl,
+					ProductPrice = p.Price
+				})
+				.FirstOrDefaultAsync(p => p.ProductID == Id);
+
 		}
 		public async Task<List<Product>> GetProducts()
 		{
@@ -48,7 +59,7 @@ namespace Ecommerce_App.Services
 		}
 		public async Task DeleteProduct(int Id)
 		{
-			Product product = await GetProduct(Id);
+			ProductDetailsDTO product = await GetProduct(Id);
 			_context.Entry(product).State = EntityState.Deleted;
 			await _context.SaveChangesAsync();
 		}

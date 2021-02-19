@@ -38,7 +38,7 @@ namespace Ecommerce_App.Auth.Services
                 {
                     ID = user.Id,
                     Username = user.UserName,
-                    Roles = await userManager.GetRolesAsync(user)
+                    Roles = {"guest"}
                 };
             }
             // What about our errors?
