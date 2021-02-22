@@ -1,0 +1,17 @@
+﻿@page "{id}"
+@model Ecommerce_App.Pages.CategoryDetailsModel
+@{
+}
+
+<h1>@Model.CategoryInfo.Name</h1>
+<p>@Model.CategoryInfo.Description</p>
+
+@foreach(var product in Model.CategoryInfo.Products)
+{
+    <section>
+        <h3>@product.Name</h3>
+        <img src=@product.ImgUrl>
+        <p>@product.Description</p>
+        <p>@product.Price</p>
+    </section>
+}
