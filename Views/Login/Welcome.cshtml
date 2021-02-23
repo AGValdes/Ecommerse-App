@@ -1,1 +1,8 @@
 ﻿<h1>Welcome!</h1>
+
+@if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+{
+    <a asp-controller="Dashboard" asp-action="Admin">Return to Dashboard</a>
+}
+<a asp-page="/index">Return to Browse</a>
+
