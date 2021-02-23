@@ -64,7 +64,7 @@ namespace Ecommerce_App
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
-				endpoints.MapControllerRoute("default", "{controller=Dashboard}/{action=Index}");
+				endpoints.MapControllerRoute("default", "{controller=Dashboard}/{action=AdminIndex}");
 			});
 		}
 	}

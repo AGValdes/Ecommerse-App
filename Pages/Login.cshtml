@@ -1,0 +1,10 @@
+﻿@page
+@model Ecommerce_App.Pages.LoginModel
+@{
+}
+<h1>Login:</h1>
+<form method="post" action="/login/authenticate">
+    <div><input type="text" name="username" placeholder="Username" /></div>
+    <div><input type="password" name="password" placeholder="Password" /></div>
+    <div><input type="submit" value="Sign In" /></div>
+</form>

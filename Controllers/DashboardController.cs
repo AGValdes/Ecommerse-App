@@ -29,7 +29,7 @@ namespace Ecommerce_App.Controllers
 		//<------------------------PAGE DISPLAY------------------------>
 
 		[Authorize(Roles = "Admin")]
-		public async Task<ActionResult<List<Category>>> Index()
+		public async Task<ActionResult<List<Category>>> Admin()
 		{
 			var categories = await _category.GetCategories();
 			return View(categories);

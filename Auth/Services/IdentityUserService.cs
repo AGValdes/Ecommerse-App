@@ -33,12 +33,13 @@ namespace Ecommerce_App.Auth.Services
             if (result.Succeeded)
             {
                 // Because we have a "Good" user, let's add them to their proper role
-                await userManager.AddToRolesAsync(user, data.Roles);
+                List<string> roles = new List<string> { "guest" };
+                await userManager.AddToRolesAsync(user, roles);
                 return new UserDTO
                 {
                     ID = user.Id,
                     Username = user.UserName,
-                    Roles = {"guest"}
+                    Roles = roles
                 };
             }
             // What about our errors?
