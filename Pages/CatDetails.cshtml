@@ -1,10 +1,11 @@
 ﻿@page "{id}"
-@model Ecommerce_App.Pages.CategoryDetailsModel
+@model Ecommerce_App.Pages.CatDetailsModel
 @{
 }
 
 <a asp-page="/login">Login</a> or <a asp-page="/register">Register</a>
-
+@if(Model.CategoryInfo != null)
+{
 <h1>@Model.CategoryInfo.Name</h1>
 <p>@Model.CategoryInfo.Description</p>
 
@@ -16,4 +17,14 @@
         <p>@product.Description</p>
         <p>@product.Price</p>
     </section>
+    <section>
+			<form method="post">
+				<input type="hidden" name="productId" value="@product.Id" />
+			  <input type="hidden" name-"cartId" value="@Model.UserCart.CartId" />
+
+				<button>Add to Cart</button>
+			</form>
+    </section>
 }
+}
+

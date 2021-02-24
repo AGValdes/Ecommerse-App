@@ -50,6 +50,7 @@ namespace Ecommerce_App
 			services.AddTransient<IUserService, IdentityUserService>();
 			services.AddTransient<ICategory, CategoryRepository>();
 			services.AddTransient<IProduct, ProductRepository>();
+			services.AddTransient<ICart, CartRepository>();
 		}
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
