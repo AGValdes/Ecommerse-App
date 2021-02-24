@@ -9,6 +9,6 @@
 
 @foreach(var cat in Model.categories)
 {
-    <a asp-page="/categorydetails" asp-route-id="@cat.Id">@cat.Name</a>
+    <a asp-page="/catdetails" asp-route-id="@cat.Id">@cat.Name</a>
     <br />
 }

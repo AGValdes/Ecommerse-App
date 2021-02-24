@@ -1,8 +1,12 @@
 ﻿using Ecommerce_App.Auth.Models;
 using Ecommerce_App.Auth.Models.DTO;
 using Ecommerce_App.Auth.Services.Interfaces;
+using Ecommerce_App.Data;
+using Ecommerce_App.Models;
+using Ecommerce_App.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +19,14 @@ namespace Ecommerce_App.Auth.Services
     {
         private UserManager<AuthUser> userManager;
         private SignInManager<AuthUser> signInManager;
-        public IdentityUserService(UserManager<AuthUser> manager, SignInManager<AuthUser> sim)
+        private EcommerceDBContext _context;
+        private ICart _cart;
+        public IdentityUserService(UserManager<AuthUser> manager, SignInManager<AuthUser> sim, EcommerceDBContext context, ICart cart)
         {
             userManager = manager;
             signInManager = sim;
+            _context = context;
+             _cart = cart;
         }
         public async Task<UserDTO> Register(RegisterUser data, ModelStateDictionary modelState)
         {
@@ -27,23 +35,29 @@ namespace Ecommerce_App.Auth.Services
             {
                 UserName = data.Username,
                 Email = data.Email,
-                PhoneNumber = data.PhoneNumber
-            };
+                PhoneNumber = data.PhoneNumber,
+               
+             };
+     
             var result = await userManager.CreateAsync(user, data.Password);
             if (result.Succeeded)
             {
-                // Because we have a "Good" user, let's add them to their proper role
+                 
+                // Because we ha await GiveUserACart(user.Id);ve a "Good" user, let's add them to their proper role
                 List<string> roles = new List<string> { "guest" };
                 await userManager.AddToRolesAsync(user, roles);
-                return new UserDTO
+                  var cart = await GiveUserACart(user.Id);
+                 return new UserDTO
                 {
                     ID = user.Id,
                     Username = user.UserName,
-                    Roles = roles
+                    Roles = roles,
+                    Cart = cart
                 };
             }
-            // What about our errors?
-            foreach (var error in result.Errors)
+           
+      // What about our errors?
+      foreach (var error in result.Errors)
             {
                 var errorKey =
                     error.Code.Contains("Password") ? nameof(data.Password) :
@@ -52,6 +66,7 @@ namespace Ecommerce_App.Auth.Services
                     "";
                 modelState.AddModelError(errorKey, error.Description);
             }
+            
             return null;
         }
         private TimeSpan TimeSpan(object p)
@@ -84,5 +99,19 @@ namespace Ecommerce_App.Auth.Services
                 Roles = await userManager.GetRolesAsync(user)
             };
         }
+
+        public async Task<UserCart> GiveUserACart(string userId)
+        {
+             Cart newCart = await _cart.CreateBlankCart();
+              UserCart userCart = new UserCart()
+              {
+                UserId = userId,
+                CartId = newCart.Id
+              };
+            _context.Entry(userCart).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+            return userCart;
+
+		    }
     }
 }

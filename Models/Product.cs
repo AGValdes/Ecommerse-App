@@ -10,6 +10,8 @@ namespace Ecommerce_App.Models
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
+
+		public int Quantity { get; set; }
 		public string ImgUrl { get; set; }
 		public decimal Price { get; set; }
 		public CategoryProduct CategoryProduct { get; set; }

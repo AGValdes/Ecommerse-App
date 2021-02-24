@@ -4,16 +4,14 @@ using Ecommerce_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ecommerce_App.Migrations
 {
     [DbContext(typeof(EcommerceDBContext))]
-    [Migration("20210218014329_addedpProductsToCategories")]
-    partial class addedpProductsToCategories
+    partial class EcommerceDBContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,6 +82,36 @@ namespace Ecommerce_App.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Ecommerce_App.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Ecommerce_App.Models.CartProduct", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "CartId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("cartProducts");
                 });
 
             modelBuilder.Entity("Ecommerce_App.Models.Category", b =>
@@ -170,7 +198,8 @@ namespace Ecommerce_App.Migrations
 
                     b.HasKey("CategoryId", "ProductId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("categoryProducts");
                 });
@@ -181,9 +210,6 @@ namespace Ecommerce_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -197,9 +223,10 @@ namespace Ecommerce_App.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CategoryId");
+                    b.HasKey("Id");
 
                     b.ToTable("products");
 
@@ -210,7 +237,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This appears to be a long sword hilt, but it emenates a radiant energy",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/436/1000/1000/636284772783859015.jpeg",
                             Name = "Sun Blade",
-                            Price = 100.00m
+                            Price = 100.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -218,7 +246,8 @@ namespace Ecommerce_App.Migrations
                             Description = "When you hit a giant with it, the giant takes an extra 2d6 damage of the weapon's type and must succeed on a DC 15 Strength saving throw or fall prone.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/231/315/315/636284736285144879.jpeg",
                             Name = "Giant Slayer",
-                            Price = 500.00m
+                            Price = 500.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -226,7 +255,8 @@ namespace Ecommerce_App.Migrations
                             Description = "When you attack a creature that has at least one head with this weapon and roll a 20 on the attack roll, you cut off one of the creature's heads.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/462/315/315/636284780691337497.jpeg",
                             Name = "Vorpal Sword",
-                            Price = 2000.00m
+                            Price = 2000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -234,7 +264,8 @@ namespace Ecommerce_App.Migrations
                             Description = "Dragon scale mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them to humanoids. Other times, hunters carefully skin and preserve the hide of a dead dragon. In either case, dragon scale mail is highly valued. While wearing this armor, you gain a + 1 bonus to AC, you have advantage on saving throws against the Frightful Presence and breath weapons of dragons, and you have resistance to one damage type that is determined by the kind of a dragon that provided the scales",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/436/1000/1000/636284772783859015.jpeg",
                             Name = "Dragon Scale Mail",
-                            Price = 2000.00m
+                            Price = 2000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -242,7 +273,8 @@ namespace Ecommerce_App.Migrations
                             Description = "You gain a +1 bonus to AC while you wear this armor. You are considered proficient with this armor even if you lack proficiency with medium armor. Made of interlocking metal rings, a chain shirt is worn between layers of clothing or leather. This armor offers modest protection to the wearer's upper body and allows the sound of the rings rubbing against one another to be muffled by outer layers.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/208/315/315/636284731937952010.jpeg",
                             Name = "Elven Chain",
-                            Price = 300.00m
+                            Price = 300.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -250,7 +282,8 @@ namespace Ecommerce_App.Migrations
                             Description = "While wearing these bracers, you have proficiency with the longbow and shortbow, and you gain a +2 bonus to damage rolls on ranged attacks made with such weapons.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/144/315/315/636284715992548759.jpeg",
                             Name = "Bracers of Archery",
-                            Price = 100.00m
+                            Price = 100.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -258,7 +291,8 @@ namespace Ecommerce_App.Migrations
                             Description = "Beads of this cloudy gray oil form on the outside of its container and quickly evaporate. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the etherealness spell for 1 hour.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/attachments/2/667/potion.jpg",
                             Name = "Oil of Etherealness",
-                            Price = 400.00m
+                            Price = 400.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -266,15 +300,17 @@ namespace Ecommerce_App.Migrations
                             Description = "When you drink this potion, you gain the effect of the detect thoughts spell (save DC 13). The potion's dense, purple liquid has an ovoid cloud of pink floating in it.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/attachments/2/667/potion.jpg",
                             Name = "Potion of Mind Reading",
-                            Price = 425.00m
+                            Price = 425.00m,
+                            Quantity = 0
                         },
                         new
                         {
                             Id = 9,
-                            Description = "You regain hit points when you drink this potion. The number of hit points depends on the potion’s rarity, as shown in the Potions of Healing table. Whatever its potency, the potion’s red liquid glimmers when agitated.",
+                            Description = "You regain hit points when you drink this potion. The number of hit points depends on the potion's rarity, as shown in the Potions of Healing table. Whatever its potency, the potion's red liquid glimmers when agitated.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/attachments/2/667/potion.jpg",
                             Name = "Potion of Healing",
-                            Price = 150.00m
+                            Price = 150.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -282,15 +318,17 @@ namespace Ecommerce_App.Migrations
                             Description = "While wearing this ring, you can stand on and move across any liquid surface as if it were solid ground.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/374/315/315/636284763046262817.jpeg",
                             Name = "Ring of Water Walking",
-                            Price = 1000.00m
+                            Price = 1000.00m,
+                            Quantity = 100
                         },
                         new
                         {
                             Id = 11,
-                            Description = "This ring has 3 charges, and it regains 1d3 expended charges daily at dawn. While wearing the ring, you can use an action to expend 1 of its charges to cast one of the following spells: Animal friendship (save DC 13), Fear (save DC 13), targeting only beasts that have an https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/372/315/315/636284762810625788.jpeg of 3 or lower, Speak with animals",
+                            Description = "This ring has 3 charges, and it regains 1d3 expended charges daily at dawn. While wearing the ring, you can use an action to expend 1 of its charges to cast one of the following spells: Animal friendship (save DC 13), Fear (save DC 13), targeting only beasts that have an https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/372/315/315/636284762810625788.jpeg of 3 or lower, Speak with animals",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/341/315/315/636284758989654087.jpeg",
                             Name = "Ring of Animal Influence",
-                            Price = 1200.00m
+                            Price = 1200.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -298,7 +336,8 @@ namespace Ecommerce_App.Migrations
                             Description = "While wearing this ring, you can use an action to expend 1 of its 3 charges to cast the wish spell from it. The ring becomes nonmagical when you use the last charge.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/231/315/315/636284736285144879.jpeg",
                             Name = "Ring of Three Wishes",
-                            Price = 50000.00m
+                            Price = 50000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -306,7 +345,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This flat iron rod has a button on one end. You can use an action to press the button, which causes the rod to become magically fixed in place. Until you or another creature uses an action to push the button again, the rod doesn't move, even if it is defying gravity. The rod can hold up to 8,000 pounds of weight. More weight causes the rod to deactivate and fall. A creature can use an action to make a DC 30 Strength check, moving the fixed rod up to 10 feet on a success.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/261/315/315/636284741670235041.jpeg",
                             Name = "Immovable Rod",
-                            Price = 500.00m
+                            Price = 500.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -314,7 +354,8 @@ namespace Ecommerce_App.Migrations
                             Description = "While holding this rod, you can use your reaction to absorb a spell that is targeting only you and not with an area of effect. The absorbed spell's effect is canceled, and the spell's energy -- not the spell itself -- is stored in the rod. ",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/386/315/315/636284765204637619.jpeg",
                             Name = "Rod of Absorption",
-                            Price = 400.00m
+                            Price = 400.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -322,7 +363,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This rod has a flanged head, and it functions as a magic mace that grants a +3 bonus to attack and damage rolls made with it. The rod has properties associated with six different buttons that are set in a row along the haft. ",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/388/315/315/636284765584014212.jpeg",
                             Name = "Rod of Lordly Might",
-                            Price = 1000.00m
+                            Price = 1000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -330,7 +372,8 @@ namespace Ecommerce_App.Migrations
                             Description = "Each scroll of protection works against a specific type of creature. Using an action to read the scroll encloses you in a invisible barrier that extends from you to form a 5 - foot - radius, 10 - foot - high cylinder.For 5 minutes, this barrier prevents creatures of the specified type from entering or affecting anything within the cylinder.",
                             ImgUrl = "",
                             Name = "Scroll of Protection",
-                            Price = 1000.00m
+                            Price = 1000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -338,7 +381,8 @@ namespace Ecommerce_App.Migrations
                             Description = "By using an action to read the scroll, you cause a comet to fall from the sky and crash to the ground at a point you can see up to 1 mile away from you. You must be outdoors when you use the scroll, or nothing happens and the scroll is wasted.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/436/1000/1000/636284772783859015.jpeg",
                             Name = "Scroll of the Comet",
-                            Price = 10000.00m
+                            Price = 10000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -346,7 +390,8 @@ namespace Ecommerce_App.Migrations
                             Description = "While holding this staff, you can use an action to expend 1 of its 10 charges to cast charm person, command, or comprehend languages from it using your spell save DC. The staff can also be used as a magic quarterstaff.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/408/315/315/636284768308428008.jpeg",
                             Name = "Staff of Charming",
-                            Price = 900.00m
+                            Price = 900.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -354,7 +399,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This staff has 10 charges. While holding it, you can use an action to expend 1 or more of its charges to cast one of the following spells from it, using your spell save DC and spellcasting ability modifier: cure wounds (1 charge per spell level, up to 4th), lesser restoration (2 charges), or mass cure wounds (5 charges).",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/414/315/315/636284768980904526.jpeg",
                             Name = "Staff of Healing",
-                            Price = 1200.00m
+                            Price = 1200.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -362,7 +408,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This staff has 10 charges and regains 1d6 + 4 expended charges daily at dawn. If you expend the last charge, roll a d20. On a 1, a swarm of insects consumes and destroys the staff, then disperses.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/418/315/315/636284769826755468.jpeg",
                             Name = "Staff of Swarming Insects",
-                            Price = 2000.00m
+                            Price = 2000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -370,7 +417,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This wand has 7 charges. While holding it, you can use an action and expend 1 charge to speak its command word. For the next minute, you know the direction of the nearest creature hostile to you within 60 feet, but not its distance from you. The wand can sense the presence of hostile creatures that are ethereal, invisible, disguised, or hidden, as well as those in plain sight. The effect ends if you stop holding the wand.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/466/315/315/636284781267634509.jpeg",
                             Name = "Wand of Enemy Detection",
-                            Price = 800.00m
+                            Price = 800.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -378,7 +426,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This wand has 7 charges. While holding it, you can use an action to expend 1 of its charges to cast the polymorph spell (save DC 15) from it.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/480/315/315/636284783799670435.jpeg",
                             Name = "Want of Polymorph",
-                            Price = 600.00m
+                            Price = 600.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -386,7 +435,8 @@ namespace Ecommerce_App.Migrations
                             Description = "The Wand of Smiles is a magic item that can target a humanoid and force them to smile for 1 minute. The Mighty Nein found the wand in the Manticore's lair.",
                             ImgUrl = "https://static.wikia.nocookie.net/criticalrole/images/d/de/Wand_of_Smiles_by_Anna_Molla.jpg/revision/latest?cb=20190304151635",
                             Name = "Wand of Smiles",
-                            Price = 100.00m
+                            Price = 100.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -394,7 +444,8 @@ namespace Ecommerce_App.Migrations
                             Description = "This item first appears to be a Large sealed iron barrel weighing 500 pounds. The barrel has a hidden catch, which can be found with a successful DC 20 Intelligence (Investigation) check. Releasing the catch unlocks a hatch at one end of the barrel, allowing two Medium or smaller creatures to crawl inside. Ten levers are set in a row at the far end, each in a neutral position, able to move either up or down. When certain levers are used, the apparatus transforms to resemble a giant lobster. ",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/124/315/315/636284709585652016.jpeg",
                             Name = "Apparatus of the Crab",
-                            Price = 60000.00m
+                            Price = 60000.00m,
+                            Quantity = 100
                         },
                         new
                         {
@@ -402,16 +453,34 @@ namespace Ecommerce_App.Migrations
                             Description = "This bag has an interior space considerably larger than its outside dimensions, roughly 2 feet in diameter at the mouth and 4 feet deep. The bag can hold up to 500 pounds, not exceeding a volume of 64 cubic feet. The bag weighs 15 pounds, regardless of its contents. Retrieving an item from the bag requires an action.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/120/315/315/636284708068284913.jpeg",
                             Name = "Bag of Holding",
-                            Price = 10000.00m
+                            Price = 10000.00m,
+                            Quantity = 100
                         },
                         new
                         {
                             Id = 26,
-                            Description = "This robe is adorned with eyelike patterns. While you wear the robe, you gain the following benefits: The robe lets you see in all directions, and you have advantage on Wisdom (Perception) checks that rely on sight. You have darkvision out to a range of 120 feet. You can see invisible creatures and objects, as well as see into the Ethereal Plane, out to a range of 120 feet.",
+                            Description = "This robe is adorned with eyelike patterns. While you wear the robe, you gain the following benefits: The robe lets you see in all directions, and you have advantage on Wisdom (Perception) checks that rely on sight. You have darkvision out to a range of 120 feet. You can see invisible creatures and objects, as well as see into the Ethereal Plane, out to a range of 120 feet.",
                             ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/378/315/315/636284763771366253.jpeg",
                             Name = "Rode of Eyes",
-                            Price = 1000.00m
+                            Price = 1000.00m,
+                            Quantity = 100
                         });
+                });
+
+            modelBuilder.Entity("Ecommerce_App.Models.UserCart", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "CartId");
+
+                    b.HasIndex("CartId")
+                        .IsUnique();
+
+                    b.ToTable("UserCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -626,6 +695,21 @@ namespace Ecommerce_App.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Ecommerce_App.Models.CartProduct", b =>
+                {
+                    b.HasOne("Ecommerce_App.Models.Cart", "Cart")
+                        .WithMany("CartProducts")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecommerce_App.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Ecommerce_App.Models.CategoryProduct", b =>
                 {
                     b.HasOne("Ecommerce_App.Models.Category", "category")
@@ -635,17 +719,25 @@ namespace Ecommerce_App.Migrations
                         .IsRequired();
 
                     b.HasOne("Ecommerce_App.Models.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .WithOne("CategoryProduct")
+                        .HasForeignKey("Ecommerce_App.Models.CategoryProduct", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Ecommerce_App.Models.Product", b =>
+            modelBuilder.Entity("Ecommerce_App.Models.UserCart", b =>
                 {
-                    b.HasOne("Ecommerce_App.Models.Category", "Category")
+                    b.HasOne("Ecommerce_App.Models.Cart", "Cart")
+                        .WithOne("UserCart")
+                        .HasForeignKey("Ecommerce_App.Models.UserCart", "CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecommerce_App.Auth.Models.AuthUser", "User")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
