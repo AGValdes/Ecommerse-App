@@ -17,14 +17,17 @@
         <p>@product.Description</p>
         <p>@product.Price</p>
     </section>
-    <section>
-		<form method="post">
-			<input type="hidden" name="productId" value="@product.Id" />
-			<input type="hidden" name="cartId" value="@Model.Cart.Id" />
+    @if(Model.LoggedInUser != null)
+    {
+        <section>
+		    <form method="post">
+			    <input type="hidden" name="productId" value="@product.Id" />
+			    <input type="hidden" name="cartId" value="@Model.Cart.Id" />
 
-			<button>Add to Cart</button>
-		</form>
-    </section>
+			    <button>Add to Cart</button>
+		    </form>
+        </section>
+    }
 }
 }
 
