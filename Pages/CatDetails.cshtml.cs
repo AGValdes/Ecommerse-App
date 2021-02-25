@@ -57,7 +57,7 @@ namespace Ecommerce_App.Pages
         public async Task<IActionResult> OnPost(int productId, int cartId)
         {
           await _cart.AddProductToCart(productId, cartId);
-          return RedirectToPage("Cart");
+          return RedirectToPage();
 		}
     }
 }

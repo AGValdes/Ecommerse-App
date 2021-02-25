@@ -37,19 +37,9 @@ namespace Ecommerce_App.Services
 			return await _context.Carts.Where(c => c.UserID.Equals(userID)).FirstOrDefaultAsync();
         }
 
-		public async Task<List<ProductDTO>> GetCartProducts(int id)
+		public async Task<List<CartProduct>> GetCartProducts(int id)
 		{
-			var cartStuff = await _context.cartProducts.Where(cp => cp.CartId == id).ToListAsync();
-
-			return cartStuff
-				.Select(cp => new ProductDTO()
-				{
-					Id = cp.Product.Id,
-					Name = cp.Product.Name,
-					Description = cp.Product.Description,
-					ImgUrl = cp.Product.ImgUrl,
-					Price = cp.Product.Price
-				}).ToList();														
+			return  await _context.cartProducts.Where(cp => cp.CartId == id).ToListAsync();												
 		}
 
 		public async Task AddProductToCart(int productId, int cartId)
