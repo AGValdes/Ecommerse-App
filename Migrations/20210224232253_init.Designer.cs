@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce_App.Migrations
 {
     [DbContext(typeof(EcommerceDBContext))]
-    [Migration("20210224020315_addedcartmodelsforreal")]
-    partial class addedcartmodelsforreal
+    [Migration("20210224232253_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,6 +92,9 @@ namespace Ecommerce_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -469,22 +472,6 @@ namespace Ecommerce_App.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Ecommerce_App.Models.UserCart", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "CartId");
-
-                    b.HasIndex("CartId")
-                        .IsUnique();
-
-                    b.ToTable("UserCarts");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -723,21 +710,6 @@ namespace Ecommerce_App.Migrations
                     b.HasOne("Ecommerce_App.Models.Product", "product")
                         .WithOne("CategoryProduct")
                         .HasForeignKey("Ecommerce_App.Models.CategoryProduct", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Ecommerce_App.Models.UserCart", b =>
-                {
-                    b.HasOne("Ecommerce_App.Models.Cart", "Cart")
-                        .WithOne("UserCart")
-                        .HasForeignKey("Ecommerce_App.Models.UserCart", "CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ecommerce_App.Auth.Models.AuthUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

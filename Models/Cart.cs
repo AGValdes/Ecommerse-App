@@ -9,9 +9,8 @@ namespace Ecommerce_App.Models
 	public class Cart
 	{
 		public int Id { get; set; }
+		public string UserID { get; set; }
 		public List<CartProduct> CartProducts {get; set;}
-
-		public UserCart UserCart { get; set; }
 
 	}
 }

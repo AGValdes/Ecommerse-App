@@ -21,14 +21,23 @@ namespace Ecommerce_App.Services
 		}
 
 
-		public async Task<Cart> CreateBlankCart()
+		public async Task<Cart> CreateBlankCart(string userID)
 		{
-				Cart cart = new Cart();
+			Cart cart = new Cart()
+			{
+				UserID = userID
+			};
 			 _context.Entry(cart).State = EntityState.Added;
 			await _context.SaveChangesAsync();
 			return cart;
 		}
-		public async Task<List<ProductDTO>> GetCart(int id)
+
+		public async Task<Cart> GetCart(string userID)
+        {
+			return await _context.Carts.Where(c => c.UserID.Equals(userID)).FirstOrDefaultAsync();
+        }
+
+		public async Task<List<ProductDTO>> GetCartProducts(int id)
 		{
 			var cartStuff = await _context.cartProducts.Where(cp => cp.CartId == id).ToListAsync();
 
@@ -40,9 +49,7 @@ namespace Ecommerce_App.Services
 					Description = cp.Product.Description,
 					ImgUrl = cp.Product.ImgUrl,
 					Price = cp.Product.Price
-				}).ToList();
-				
-																	
+				}).ToList();														
 		}
 
 		public async Task AddProductToCart(int productId, int cartId)
@@ -58,7 +65,8 @@ namespace Ecommerce_App.Services
 
 		public async Task DeleteProductFromCart(int id)
 		{
-			var product = await GetCart(id);
+			//TODO: Write method to get a single CartProduct to delete not a whole damn list
+			var product = await GetCartProducts(id);
 			_context.Entry(product).State = EntityState.Deleted;
 			await _context.SaveChangesAsync();
 		}

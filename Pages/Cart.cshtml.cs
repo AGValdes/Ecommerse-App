@@ -13,17 +13,16 @@ namespace Ecommerce_App.Pages
     public class CartModel : PageModel
     {
         public ICart _cart { get; set; }
+        public List<ProductDTO> CartProducts { get; set; }
 
         public CartModel(ICart cart)
         {
             _cart = cart;
-		    }
-        public List<ProductDTO> CartProducts { get; set; }
-
+		}
         
         public async Task OnGet(int id)
         {
-            CartProducts = await _cart.GetCart(id);
+            //CartProducts = await _cart.GetCart(id);
         }
     }
 }

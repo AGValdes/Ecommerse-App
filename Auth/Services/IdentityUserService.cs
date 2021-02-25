@@ -43,10 +43,10 @@ namespace Ecommerce_App.Auth.Services
             if (result.Succeeded)
             {
                  
-                // Because we ha await GiveUserACart(user.Id);ve a "Good" user, let's add them to their proper role
+                // Because we have a "Good" user, let's add them to their proper role
                 List<string> roles = new List<string> { "guest" };
                 await userManager.AddToRolesAsync(user, roles);
-                  var cart = await GiveUserACart(user.Id);
+                var cart = await GiveUserACart(user.Id);
                  return new UserDTO
                 {
                     ID = user.Id,
@@ -100,17 +100,10 @@ namespace Ecommerce_App.Auth.Services
             };
         }
 
-        public async Task<UserCart> GiveUserACart(string userId)
+        public async Task<Cart> GiveUserACart(string userId)
         {
-             Cart newCart = await _cart.CreateBlankCart();
-              UserCart userCart = new UserCart()
-              {
-                UserId = userId,
-                CartId = newCart.Id
-              };
-            _context.Entry(userCart).State = EntityState.Added;
-            await _context.SaveChangesAsync();
-            return userCart;
+             Cart newCart = await _cart.CreateBlankCart(userId);
+            return newCart;
 
 		    }
     }

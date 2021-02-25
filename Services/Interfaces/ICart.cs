@@ -9,8 +9,9 @@ namespace Ecommerce_App.Services.Interfaces
 {
 	public interface ICart
 	{
-		public Task<List<ProductDTO>> GetCart(int id);
-		public Task<Cart> CreateBlankCart();
+		public Task<Cart> GetCart(string userId);
+		public Task<List<ProductDTO>> GetCartProducts(int id);
+		public Task<Cart> CreateBlankCart(string userID);
 		public Task AddProductToCart(int productId, int cartId);
 		public Task DeleteProductFromCart(int id);
 	}

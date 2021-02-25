@@ -21,7 +21,6 @@ namespace Ecommerce_App.Data
         public DbSet<CartProduct> cartProducts { get; set; }
 
         public DbSet<Cart> Carts { get; set; }
-        public DbSet<UserCart> UserCarts { get; set; }
 
         public EcommerceDBContext(DbContextOptions options) : base(options) {}
 
@@ -82,9 +81,6 @@ namespace Ecommerce_App.Data
             );
              modelBuilder.Entity<CartProduct>().HasKey(
                 cartProduct => new { cartProduct.ProductId, cartProduct.CartId }
-             );
-               modelBuilder.Entity<UserCart>().HasKey(
-                userCart => new { userCart.UserId, userCart.CartId }
              );
     }
         private int nextId = 1;
