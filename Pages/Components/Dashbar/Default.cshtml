@@ -3,5 +3,12 @@
 <span class="navbar-text">
     <a asp-area="" asp-page="/Login" class="navbar-brand">Login</a>
     <a asp-area="" asp-page="/Register" class="navbar-brand">Register</a>
-    <a asp-area="" asp-page="/Cart" asp-route-id="@Model.CartID" class="navbar-brand">Cart contains @Model.numProd items.</a>
+    @if(Model.CartID != null)
+    {
+        <a asp-area="" asp-page="/Cart" asp-route-id="@Model.CartID" class="navbar-brand">Cart contains @Model.numProd items.</a>
+    }
+    @if(Model.CartID == null)
+    { 
+        <p>Login to view your cart</p>
+    }
 </span>

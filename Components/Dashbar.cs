@@ -28,6 +28,8 @@ namespace Ecommerce_App.Components
         {
             //Get the data (query the database for our products list
             var currentUser = await _user.GetUser((System.Security.Claims.ClaimsPrincipal)User);
+            if(currentUser != null)
+            {
             var cart = await _cart.GetCart(currentUser.ID);
 
             var products = await _cart.GetCartProducts(cart.Id);
@@ -44,14 +46,21 @@ namespace Ecommerce_App.Components
                 CartID = cart.Id
             };
             return View(model);
+            }
 
+            ViewModel nullModel = new ViewModel()
+            {
+                numProd = null,
+                CartID = null
+            };
+            return View(nullModel);
         }
         //creating feilds for our data
         public class ViewModel
         {
-            public int numProd { get; set; }
+            public int? numProd { get; set; }
 
-            public int CartID { get; set; }
+            public int? CartID { get; set; }
         }
     }
 }

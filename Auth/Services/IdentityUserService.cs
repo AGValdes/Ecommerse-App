@@ -92,12 +92,16 @@ namespace Ecommerce_App.Auth.Services
         public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
         {
             var user = await userManager.GetUserAsync(principal);
-            return new UserDTO
+            if(user != null)
             {
-                ID = user.Id,
-                Username = user.UserName,
-                Roles = await userManager.GetRolesAsync(user)
-            };
+                return new UserDTO
+                {
+                    ID = user.Id,
+                    Username = user.UserName,
+                    Roles = await userManager.GetRolesAsync(user)
+                };
+            }
+            return null;
         }
 
         public async Task<Cart> GiveUserACart(string userId)

@@ -18,7 +18,7 @@ namespace Ecommerce_App.Pages
         [BindProperty]
         public CategoryDetailsDTO CategoryInfo { get; set; }
 
-        public UserDTO LoggedInUser { get; set; }
+        public UserDTO? LoggedInUser { get; set; }
         
         [BindProperty]
         public Cart Cart { get; set; }
@@ -43,15 +43,22 @@ namespace Ecommerce_App.Pages
         {
       
             var currentUser = await _user.GetUser(User);
-            Cart = await _cart.GetCart(currentUser.ID);
-            LoggedInUser = new UserDTO
+            if(currentUser != null)
             {
-                Username = currentUser.Username,
-                ID = currentUser.ID,
-                Roles = currentUser.Roles
-            };
-            CategoryInfo = await _category.GetCategory(id);
-            return Page();
+                Cart = await _cart.GetCart(currentUser.ID);
+                LoggedInUser = new UserDTO
+                {
+                    Username = currentUser.Username,
+                    ID = currentUser.ID,
+                    Roles = currentUser.Roles
+                };
+            }
+            else
+            {
+                LoggedInUser = null;
+            }
+                CategoryInfo = await _category.GetCategory(id);
+                return Page();
         }
 
         public async Task<IActionResult> OnPost(int productId, int cartId)

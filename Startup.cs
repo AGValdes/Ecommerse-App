@@ -16,6 +16,8 @@ using Ecommerce_App.Auth.Services.Interfaces;
 using Ecommerce_App.Auth.Services;
 using Ecommerce_App.Services.Interfaces;
 using Ecommerce_App.Services;
+using Ecommerce_App.Services.Email.Interfaces;
+using Ecommerce_App.Services.Email;
 
 namespace Ecommerce_App
 {
@@ -30,6 +32,7 @@ namespace Ecommerce_App
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc();
+			services.AddScoped<IEmail, SendGridEmailer>();
 			services.AddDbContext<EcommerceDBContext>(options =>
 			{
 				string connectionString = Configuration.GetConnectionString("DefaultConnection");
