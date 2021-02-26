@@ -18,6 +18,7 @@ namespace Ecommerce_App.Pages
         public ICart _cart { get; set; }
         public IUserService _user { get; set; }
         public List<ProductDTO> CartProducts { get; set; }
+        public int CartId { get; set; }
 
         public CartModel(EcommerceDBContext context, ICart cart, IUserService user)
         {
@@ -45,7 +46,18 @@ namespace Ecommerce_App.Pages
                 });
             }
             CartProducts = products;
+            CartId = cartId;
             return Page();
+        }
+
+        public async Task<IActionResult> OnPost(int CartId)
+        {
+            var user = await _user.GetUser(User);
+            var order = new Order
+            {
+                Cart = await _cart.GetCart(user.ID)
+            };
+            return RedirectToPage("/Checkout");
         }
     }
 }
