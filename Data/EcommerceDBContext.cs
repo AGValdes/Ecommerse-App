@@ -22,6 +22,7 @@ namespace Ecommerce_App.Data
 
         public DbSet<Cart> Carts { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
         public EcommerceDBContext(DbContextOptions options) : base(options) {}
 
 

@@ -10,6 +10,8 @@ namespace Ecommerce_App.Models
 	{
 		public int Id { get; set; }
 		public string UserID { get; set; }
+
+		public Order Order { get; set; }
 		public List<CartProduct> CartProducts {get; set;}
 
 	}

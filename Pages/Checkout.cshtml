@@ -1,5 +1,12 @@
-﻿@page
+﻿@page "{id}"
 @model Ecommerce_App.Pages.CheckoutModel
 @{
 }
 <h1>Hello from the checkout page!</h1>
+
+
+
+<h1>@Model.User.Identity.Name, here is your order: @Model.Order.Id</h1>
+
+
+<button>This will be a button that does a thing</button>

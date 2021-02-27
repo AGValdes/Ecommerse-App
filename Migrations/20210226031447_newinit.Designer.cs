@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce_App.Migrations
 {
     [DbContext(typeof(EcommerceDBContext))]
-    [Migration("20210225005058_connect-prodcut-to-cartproduct")]
-    partial class connectprodcuttocartproduct
+    [Migration("20210226031447_newinit")]
+    partial class newinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

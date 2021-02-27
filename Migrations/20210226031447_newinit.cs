@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ecommerce_App.Migrations
 {
-    public partial class init : Migration
+    public partial class newinit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -362,6 +362,12 @@ namespace Ecommerce_App.Migrations
                 name: "IX_cartProducts_CartId",
                 table: "cartProducts",
                 column: "CartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cartProducts_ProductId",
+                table: "cartProducts",
+                column: "ProductId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_categoryProducts_ProductId",
