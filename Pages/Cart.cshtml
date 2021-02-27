@@ -11,7 +11,8 @@
 		<li>@prod.Price</li>
 	}
 </ul>
-<form method="post">
-	<input asp-for="@Model.CartId" type="hidden">
-	<button>Checkout</button>
+<form method="post" asp-route-id="@Model.UserObj.ID"  asp-page="/Checkout">
+	<input type="hidden" name="UserID" value="@Model.UserObj.ID" />
+	<button type="submit">Go To Checkout</button>
 </form>
+

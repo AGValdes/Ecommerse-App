@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce_App.Migrations
 {
     [DbContext(typeof(EcommerceDBContext))]
-    [Migration("20210224232253_init")]
-    partial class init
+    [Migration("20210226231839_updatedOrderModel")]
+    partial class updatedOrderModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,6 +115,9 @@ namespace Ecommerce_App.Migrations
                     b.HasKey("ProductId", "CartId");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("cartProducts");
                 });
@@ -693,8 +696,8 @@ namespace Ecommerce_App.Migrations
                         .IsRequired();
 
                     b.HasOne("Ecommerce_App.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .WithOne("CartProduct")
+                        .HasForeignKey("Ecommerce_App.Models.CartProduct", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
