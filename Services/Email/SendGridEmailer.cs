@@ -21,7 +21,7 @@ namespace Ecommerce_App.Services.Email
         public async Task<EmailResponse> SendEmailAsync(Message message)
         {
             string apiKey = Configuration["SendGrid:Key"];
-            string fromEmail = Configuration["SendGrid:fsDefaultFromAddress"];
+            string fromEmail = Configuration["SendGrid:DefaultFromAddress"];
             string fromName = Configuration["SendGrid:DefaultFromName"];
 
             var client = new SendGridClient(apiKey);

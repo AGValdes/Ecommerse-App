@@ -20,17 +20,18 @@ namespace Ecommerce_App.Pages
     {
 
         private EcommerceDBContext _context { get; set; }
-        public ICart _cart { get; set; }
-        public IUserService _user { get; set; }
-        public IEmail _email { get; set; }
+        private ICart _cart { get; set; }
+        private IUserService _user { get; set; }
+        private IEmail _email { get; set; }
         [BindProperty]
         public Order Order { get; set; }
 
-        public CheckoutModel(EcommerceDBContext context, ICart cart, IUserService user)
+        public CheckoutModel(EcommerceDBContext context, ICart cart, IUserService user, IEmail email)
         {
           _context = context;
           _cart = cart;
           _user = user;
+          _email = email;
         }
         public async Task<IActionResult> OnPost(string UserID)
         {
@@ -68,7 +69,7 @@ namespace Ecommerce_App.Pages
         
         }
 
-        public async Task OnPostCheckout(string ShippingStreet, string ShippingCity, string ShippingState, int ShippingZip)
+        public async Task<IActionResult> OnPostCheckout(string ShippingStreet, string ShippingCity, string ShippingState, int ShippingZip)
         {
             Order.ShippingAddress = $"{ShippingStreet} {ShippingCity}, {ShippingState} {ShippingZip}";
             var user = await _user.GetUser(User);
@@ -79,15 +80,10 @@ namespace Ecommerce_App.Pages
                 Body = "Test email"
             };
 
-            EmailResponse response = await _email.SendEmailAsync(message);
+           await _email.SendEmailAsync(message);
 
-            string status = response.WasSent.ToString();
-
-            foreach(var t in user.Roles)
-            {
-                Console.WriteLine("this is just stalling");
-            }
-
+            //string status = response.WasSent.ToString();
+            return RedirectToPage("/Index");
         }
     }
 }
