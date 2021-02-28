@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce_App.Migrations
 {
     [DbContext(typeof(EcommerceDBContext))]
-    [Migration("20210226231839_updatedOrderModel")]
-    partial class updatedOrderModel
+    [Migration("20210227232218_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,10 +93,15 @@ namespace Ecommerce_App.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserID")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Carts");
                 });
@@ -210,6 +215,191 @@ namespace Ecommerce_App.Migrations
                         .IsUnique();
 
                     b.ToTable("categoryProducts");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 8
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 9
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            ProductId = 10
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            ProductId = 11
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            ProductId = 12
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            ProductId = 13
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            ProductId = 14
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            ProductId = 15
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            ProductId = 16
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            ProductId = 17
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            ProductId = 18
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            ProductId = 19
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            ProductId = 20
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            ProductId = 21
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            ProductId = 22
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            ProductId = 23
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            ProductId = 24
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            ProductId = 25
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            ProductId = 26
+                        });
+                });
+
+            modelBuilder.Entity("Ecommerce_App.Models.DTO.ProductDTO", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ProductDTO");
+                });
+
+            modelBuilder.Entity("Ecommerce_App.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("PaymentInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippingAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ShippingStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Ecommerce_App.Models.Product", b =>
@@ -687,6 +877,13 @@ namespace Ecommerce_App.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Ecommerce_App.Models.Cart", b =>
+                {
+                    b.HasOne("Ecommerce_App.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+                });
+
             modelBuilder.Entity("Ecommerce_App.Models.CartProduct", b =>
                 {
                     b.HasOne("Ecommerce_App.Models.Cart", "Cart")
@@ -715,6 +912,13 @@ namespace Ecommerce_App.Migrations
                         .HasForeignKey("Ecommerce_App.Models.CategoryProduct", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Ecommerce_App.Models.DTO.ProductDTO", b =>
+                {
+                    b.HasOne("Ecommerce_App.Models.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

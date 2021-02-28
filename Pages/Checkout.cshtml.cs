@@ -7,6 +7,8 @@ using Ecommerce_App.Auth.Services.Interfaces;
 using Ecommerce_App.Data;
 using Ecommerce_App.Models;
 using Ecommerce_App.Models.DTO;
+using Ecommerce_App.Services.Email.Interfaces;
+using Ecommerce_App.Services.Email.Models;
 using Ecommerce_App.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,6 +22,7 @@ namespace Ecommerce_App.Pages
         private EcommerceDBContext _context { get; set; }
         public ICart _cart { get; set; }
         public IUserService _user { get; set; }
+        public IEmail _email { get; set; }
         [BindProperty]
         public Order Order { get; set; }
 
@@ -39,27 +42,52 @@ namespace Ecommerce_App.Pages
             cart.Order = order;
             _context.Entry(cart).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-             //List<ProductDTO> prodList = new List<ProductDTO>();
-           //   foreach (var product in cart.CartProducts)
-           //   {
-           //        var theThingWeNeed =  _context.products.Where(p => p.Id == product.ProductId).FirstOrDefault();
-           //           ProductDTO prod = new ProductDTO()
-           //           {
-           //             Id = theThingWeNeed.Id,
-           //             Name = theThingWeNeed.Name,
-           //             Price = theThingWeNeed.Price
-           //           };
-           //       prodList.Add(prod);
-        			//}
-
-             //order.Products = prodList;
-             Order = order;
-              
-              return Page();
+            List<ProductDTO> prodList = new List<ProductDTO>();
+            var cartProducts = await _cart.GetCartProducts(cart.Id);
+            foreach(var prod in cartProducts)
+            {
+                var product = await _context.products.Where(p => p.Id == prod.ProductId).FirstOrDefaultAsync();
+                ProductDTO productDTO = new ProductDTO()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price
+                };
+                prodList.Add(productDTO);
+            }
+            Order = order;
+            Order.Products = prodList;
+            decimal total = 0;
+            foreach(ProductDTO ppro in prodList)
+            {
+                total += ppro.Price;
+            }
+            Order.TotalCost = total; 
+            return Page();
 
         
         }
 
-        
+        public async Task OnPostCheckout(string ShippingStreet, string ShippingCity, string ShippingState, int ShippingZip)
+        {
+            Order.ShippingAddress = $"{ShippingStreet} {ShippingCity}, {ShippingState} {ShippingZip}";
+            var user = await _user.GetUser(User);
+            Message message = new Message()
+            {
+                To = user.Email,
+                Subject = "Your Seraphina's Sundaries Order",
+                Body = "Test email"
+            };
+
+            EmailResponse response = await _email.SendEmailAsync(message);
+
+            string status = response.WasSent.ToString();
+
+            foreach(var t in user.Roles)
+            {
+                Console.WriteLine("this is just stalling");
+            }
+
+        }
     }
 }

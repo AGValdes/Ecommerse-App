@@ -13,18 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20210226031447_newinit.cs" />
-    <Compile Include="Migrations\20210226031447_newinit.Designer.cs" />
-    <Compile Include="Migrations\20210226231839_updatedOrderModel.cs" />
-    <Compile Include="Migrations\20210226231839_updatedOrderModel.Designer.cs" />
-    <Compile Include="Migrations\20210226232205_forRealThisTime.cs" />
-    <Compile Include="Migrations\20210226232205_forRealThisTime.Designer.cs" />
-    <Compile Include="Migrations\20210226233947_updateORderModel.cs" />
-    <Compile Include="Migrations\20210226233947_updateORderModel.Designer.cs" />
-    <Compile Include="Migrations\20210227013303_updateCArtModel.cs" />
-    <Compile Include="Migrations\20210227013303_updateCArtModel.Designer.cs" />
-    <Compile Include="Migrations\20210227014736_addedProductsToOrder.cs" />
-    <Compile Include="Migrations\20210227014736_addedProductsToOrder.Designer.cs" />
+    <Compile Include="Migrations\20210227232218_init.cs" />
+    <Compile Include="Migrations\20210227232218_init.Designer.cs" />
     <Compile Include="Migrations\EcommerceDBContextModelSnapshot.cs" />
   </ItemGroup>
 

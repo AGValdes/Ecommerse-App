@@ -13,3 +13,6 @@ This Application has 3 views:
 - The Product Details view will hold the form needed to create or update a product, as well as the details associated with the selected Product. Submitting the form will redirect you to a confirmation page.
 
 APIKeyName: EcommerceEmail
+
+References:
+	Special thanks to freeformatter for the states dropdown at checkout.

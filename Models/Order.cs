@@ -18,6 +18,6 @@ namespace Ecommerce_App.Models
         //Probably will change when we know what the payment info looks like:
         public string PaymentInfo { get; set; }
 
-        public int TotalCost { get; set;  }
+        public decimal TotalCost { get; set;  }
     }
 }
