@@ -43,6 +43,8 @@ namespace Ecommerce_App.Pages
             cart.Order = order;
             _context.Entry(cart).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+
+
             List<ProductDTO> prodList = new List<ProductDTO>();
             var cartProducts = await _cart.GetCartProducts(cart.Id);
             foreach(var prod in cartProducts)
@@ -82,8 +84,7 @@ namespace Ecommerce_App.Pages
 
            await _email.SendEmailAsync(message);
 
-            //string status = response.WasSent.ToString();
-            return RedirectToPage("/Index");
+           return RedirectToPage("/Index");
         }
     }
 }
