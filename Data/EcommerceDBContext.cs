@@ -69,6 +69,35 @@ namespace Ecommerce_App.Data
             modelBuilder.Entity<Product>().HasData(new Product { Id = 25, Name = "Bag of Holding", Description = "This bag has an interior space considerably larger than its outside dimensions, roughly 2 feet in diameter at the mouth and 4 feet deep. The bag can hold up to 500 pounds, not exceeding a volume of 64 cubic feet. The bag weighs 15 pounds, regardless of its contents. Retrieving an item from the bag requires an action.", Price = 10000.00m, ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/120/315/315/636284708068284913.jpeg", Quantity = 100 });
             modelBuilder.Entity<Product>().HasData(new Product { Id = 26, Name = "Rode of Eyes", Description = "This robe is adorned with eyelike patterns. While you wear the robe, you gain the following benefits: The robe lets you see in all directions, and you have advantage on Wisdom (Perception) checks that rely on sight. You have darkvision out to a range of 120 feet. You can see invisible creatures and objects, as well as see into the Ethereal Plane, out to a range of 120 feet.", Price = 1000.00m, ImgUrl = "https://media-waterdeep.cursecdn.com/avatars/thumbnails/7/378/315/315/636284763771366253.jpeg", Quantity = 100 });
 
+            ///*==========================================  Category Product  =========================================*/
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 1, ProductId = 1});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 1, ProductId = 2});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 1, ProductId = 3});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 2, ProductId = 4});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 2, ProductId = 5});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 2, ProductId = 6});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 3, ProductId = 7});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 3, ProductId = 8});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 3, ProductId = 9});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 4, ProductId = 10});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 4, ProductId = 11});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 4, ProductId = 12});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 5, ProductId = 13});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 5, ProductId = 14});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 5, ProductId = 15});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 6, ProductId = 16});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 6, ProductId = 17});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 7, ProductId = 18});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 7, ProductId = 19});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 7, ProductId = 20});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 8, ProductId = 21});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 8, ProductId = 22});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 8, ProductId = 23});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 9, ProductId = 24});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 9, ProductId = 25});
+            modelBuilder.Entity<CategoryProduct>().HasData(new CategoryProduct { CategoryId = 9, ProductId = 26});
+
+
             // This calls the base method, and Identity needs it
             base.OnModelCreating(modelBuilder);
             SeedRole(modelBuilder, "Admin", "read", "create", "update", "delete");

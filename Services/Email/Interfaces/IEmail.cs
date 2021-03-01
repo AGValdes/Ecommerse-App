@@ -8,6 +8,6 @@ namespace Ecommerce_App.Services.Email.Interfaces
 {
     public interface IEmail
     {
-        Task<EmailResponse> SendEmailAsync(Message message);
+        public Task<EmailResponse> SendEmailAsync(Message message);
     }
 }

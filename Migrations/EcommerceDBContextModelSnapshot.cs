@@ -213,6 +213,138 @@ namespace Ecommerce_App.Migrations
                         .IsUnique();
 
                     b.ToTable("categoryProducts");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 8
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 9
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            ProductId = 10
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            ProductId = 11
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            ProductId = 12
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            ProductId = 13
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            ProductId = 14
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            ProductId = 15
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            ProductId = 16
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            ProductId = 17
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            ProductId = 18
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            ProductId = 19
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            ProductId = 20
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            ProductId = 21
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            ProductId = 22
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            ProductId = 23
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            ProductId = 24
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            ProductId = 25
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            ProductId = 26
+                        });
                 });
 
             modelBuilder.Entity("Ecommerce_App.Models.DTO.ProductDTO", b =>
@@ -260,8 +392,8 @@ namespace Ecommerce_App.Migrations
                     b.Property<bool>("ShippingStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TotalCost")
-                        .HasColumnType("int");
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

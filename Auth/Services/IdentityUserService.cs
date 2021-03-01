@@ -51,6 +51,7 @@ namespace Ecommerce_App.Auth.Services
                 {
                     ID = user.Id,
                     Username = user.UserName,
+                    Email = user.Email,
                     Roles = roles,
                     Cart = cart
                 };
@@ -98,6 +99,7 @@ namespace Ecommerce_App.Auth.Services
                 {
                     ID = user.Id,
                     Username = user.UserName,
+                    Email = user.Email,
                     Roles = await userManager.GetRolesAsync(user)
                 };
             }
